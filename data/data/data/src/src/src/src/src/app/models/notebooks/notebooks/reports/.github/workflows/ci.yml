@@ -1,18 +1,3 @@
-name: CI
-
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
   - name: Set up Python
     uses: actions/setup-python@v4
     with:
@@ -32,16 +17,3 @@ jobs:
     run: |
       pip install flake8
       flake8 --max-line-length=120 || true
-
-        build-and-push:
-    if: github.event_name == 'push'
-    needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-          - name: Set
-
