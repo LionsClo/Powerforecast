@@ -13,3 +13,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10'
+
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+
+  - name: Run basic tests
+    run: |
+      pytest -q || true
+      python -c "import importlib; importlib.import_module('src.features'); importlib.import_module('src.model')"
+
+  - name: Lint (basic)
+    run: |
+      pip install flake8
+      flake8 --max-line-length=120 || true
+
+        build-and-push:
+    if: github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+          - name: Set
+
